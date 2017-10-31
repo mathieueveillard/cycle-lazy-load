@@ -1,0 +1,75 @@
+{
+  "name": "cycle-lazy-load",
+  "version": "0.1.0",
+  "description": "Lazy loading library for infinite scrolling in cycle.js",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "compile": "tsc",
+    "compile:watch": "npm run compile -- --watch",
+    "test": "mocha src/**/*.test.js",
+    "test:watch": "npm test -- --watch",
+    "test:mutation": "stryker run",
+    "start": "concurrently 'npm run compile:watch' 'npm run test:watch'",
+    "prettify": "prettier --write 'src/**/*.ts'",
+    "minify": "uglifyjs lib/**/*.js -cmo lib/index.min.js",
+    "build": "npm run compile && npm run test && rm -rf lib && mkdir lib && tsc -p tsconfig.build.json && npm run minify",
+    "test:pack": "npm run build && npm pack",
+    "prepublishOnly": "npm run build"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run compile && npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,json,css,md}": [
+      "npm run prettify",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathieueveillard/cycle-lazy-load.git"
+  },
+  "keywords": [
+    "lazy-loading",
+    "cyclejs",
+    "typescript"
+  ],
+  "author": "Mathieu Eveillard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mathieueveillard/cycle-lazy-load/issues"
+  },
+  "homepage": "https://github.com/mathieueveillard/cycle-lazy-load#readme",
+  "dependencies": {
+    "@cycle/run": "^4.4.0",
+    "@cycle/time": "^0.15.0",
+    "xstream": "^11.7.0",
+    "xstream-combine-unique": "^1.0.0",
+    "xstream-debounce-accumulate": "^1.0.0"
+  },
+  "devDependencies": {
+    "@cycle/dom": "^20.4.0",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.5.8",
+    "@types/ramda": "^0.25.36",
+    "concurrently": "^3.6.1",
+    "cycle-resize": "^1.0.2",
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.2",
+    "mocha": "^5.2.0",
+    "pack": "^2.1.0",
+    "prettier": "^1.14.2",
+    "stryker": "^0.29.1",
+    "stryker-api": "^0.21.0",
+    "stryker-baseline-reporter": "^1.0.3",
+    "stryker-html-reporter": "^0.16.1",
+    "stryker-mocha-framework": "^0.12.1",
+    "stryker-mocha-runner": "^0.14.1",
+    "stryker-typescript": "^0.13.2",
+    "typescript": "^3.0.1",
+    "uglify-js": "^3.4.8"
+  }
+}

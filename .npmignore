@@ -1,0 +1,8 @@
+.vscode
+doc
+node_modules
+reports
+src
+.gitignore
+.prettierrc
+*.tgz
